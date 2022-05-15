@@ -1,14 +1,21 @@
 const body = document.querySelector("body");
-const main = document.querySelector(".container");
+const productsContent = document.querySelector(".products-content");
+const main = document.querySelector(".container"); 
 
-function loadSection (category) {
-  /*
+function loadPage (arrayObjetos) {
+  //console.log(arrayObjetos);
 
-  section class products section
-  ul
-  
-  */
+  for (let i = 0; i < arrayObjetos.length; i++) {
+    loadObject(arrayObjetos[i]);
+
+
+
+  }
 }
+
+loadPage(products);
+
+// render only li, let the loop do the rest
 
 function loadObject (objeto) {
   // RECUPERANDO AS INFORMAÇÕES DO PRODUTO
@@ -19,13 +26,14 @@ function loadObject (objeto) {
   const imageDescription = objeto.imageDescription;
   
   // CRIANDO ELEMENTOS
+  const ul = document.createElement("ul");
   const li = document.createElement("li");
   const productImg = document.createElement("img")
   const productMain = document.createElement("main");
   const productTitle = document.createElement("h1");
   const productCategory = document.createElement("h5");
   const productPrice = document.createElement("strong");
-
+  
   // ADICIONANDO AS INFORMAÇÕES
     // Informações da Imagem
   productImg.src = objeto.image === undefined ? './img/products/no-img.svg' : image;
@@ -34,26 +42,35 @@ function loadObject (objeto) {
   productImg.classList.add("product-img");
     // Informações dos Textos
   productMain.classList.add("product-main")
+  productsContent.classList.add("products-content")
   productTitle.classList.add("product-title");
   productCategory.classList.add("product-category");
   productPrice.classList.add("product-price");
-
-  
-
+  li.classList.add("product")
+  // Conteúdo dos Textos
+  productTitle.innerText = title;
+  productCategory.innerText = category;
+  productPrice.innerText = `R$ ${price}`;
 
   // MONTAGEM DA SEÇÃO 
-  
+  productsContent.appendChild(ul);
+  ul.appendChild(li);
+  li.appendChild(productImg);
+  li.appendChild(productMain);
+  productMain.appendChild(productTitle);
+  productMain.appendChild(productCategory);
+  productMain.appendChild(productPrice);
 
   // LOOP 
 
 
   // RETORNO ESTRUTURA MONTADA
 
-  return li;
+    return li;
 }
 
 const objetoTeste = {
-  title: "Uva Crimson",
+  title: "Uva Thompson",
   price: 8.99,
   category: "Frutas",
   image: undefined,
