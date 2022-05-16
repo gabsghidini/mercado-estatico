@@ -1,21 +1,31 @@
 const body = document.querySelector("body");
 const productsContent = document.querySelector(".products-content");
-const main = document.querySelector(".container"); 
+const fruits = document.querySelector("#fruits");
+const drinks = document.querySelector("#drinks");
+const hygiene = document.querySelector("#hygiene");
+const main = document.querySelector("#container"); 
 
 function loadPage (arrayObjetos) {
-  //console.log(arrayObjetos);
 
   for (let i = 0; i < arrayObjetos.length; i++) {
-    loadObject(arrayObjetos[i]);
+    // loadObject(arrayObjetos[i]);
+    const objeto = arrayObjetos[i];
 
+    const objCategory = arrayObjetos[i].category
 
+    const loadedObject = loadObject(objeto);
+
+    if (objCategory === 'Frutas') {
+      fruits.appendChild(loadedObject);
+    } else if (objCategory === 'Bebidas') {
+      drinks.appendChild(loadedObject);
+    } else if (objCategory === 'Higiene') {
+      hygiene.appendChild(loadedObject);
+    }
 
   }
 }
 
-loadPage(products);
-
-// render only li, let the loop do the rest
 
 function loadObject (objeto) {
   // RECUPERANDO AS INFORMAÇÕES DO PRODUTO
@@ -26,73 +36,43 @@ function loadObject (objeto) {
   const imageDescription = objeto.imageDescription;
   
   // CRIANDO ELEMENTOS
-  const ul = document.createElement("ul");
-  const li = document.createElement("li");
-  const productImg = document.createElement("img")
-  const productMain = document.createElement("main");
-  const productTitle = document.createElement("h1");
-  const productCategory = document.createElement("h5");
-  const productPrice = document.createElement("strong");
+  const li               = document.createElement("li");
+  const productImg       = document.createElement("img")
+  const productMain      = document.createElement("main");
+  const productTitle     = document.createElement("h1");
+  const productCategory  = document.createElement("h5");
+  const productPrice     = document.createElement("strong");
   
   // ADICIONANDO AS INFORMAÇÕES
-    // Informações da Imagem
+
+  // Informações da Imagem
   productImg.src = objeto.image === undefined ? './img/products/no-img.svg' : image;
   productImg.alt = objeto.imageDescription === "" ? title : imageDescription;
   productImg.title = title;
   productImg.classList.add("product-img");
-    // Informações dos Textos
+  
+  // Informações dos Textos
   productMain.classList.add("product-main")
-  productsContent.classList.add("products-content")
   productTitle.classList.add("product-title");
   productCategory.classList.add("product-category");
   productPrice.classList.add("product-price");
   li.classList.add("product")
+
   // Conteúdo dos Textos
   productTitle.innerText = title;
   productCategory.innerText = category;
   productPrice.innerText = `R$ ${price}`;
 
   // MONTAGEM DA SEÇÃO 
-  productsContent.appendChild(ul);
-  ul.appendChild(li);
   li.appendChild(productImg);
   li.appendChild(productMain);
   productMain.appendChild(productTitle);
   productMain.appendChild(productCategory);
   productMain.appendChild(productPrice);
 
-  // LOOP 
-
-
   // RETORNO ESTRUTURA MONTADA
-
-    return li;
+  return li;
 }
 
-const objetoTeste = {
-  title: "Uva Thompson",
-  price: 8.99,
-  category: "Frutas",
-  image: undefined,
-  imageDescription: "",
-}
 
-loadObject(objetoTeste)
-
-/* 
-  
-<li class="product">
-<img
-  src="./img/productsss/no-img.svg"
-  alt=""
-  title=""
-  class="product-img"
-/>
-<main class="product-main">
-  <h1 class="product-title">Uva Crimson</h1>
-  <h5 class="product-category">Frutas</h5>
-  <strong class="product-price">R$ 8.99</strong>
-</main>
-</li>
-
-*/
+loadPage(products);
